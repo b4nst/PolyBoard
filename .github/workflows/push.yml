@@ -14,4 +14,4 @@ jobs:
       - name: build
         run: make
       - name: test
-        run: test -f build/launchpad_pro.syx
+        run: test -f build/polyboard.syx
