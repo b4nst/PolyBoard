@@ -42,6 +42,7 @@
 void hal_plot_led(u8 type, u8 index, u8 red, u8 green, u8 blue)
 {
     // wire this up to MIDI out...?
+    printf("...hsl_plot_led(%d, %d, 0x%2.2x, 0x%2.2x, 0x%2.2x);\n", type, index, red, green, blue);
 }
 
 void hal_read_led(u8 type, u8 index, u8 *red, u8 *green, u8 *blue)

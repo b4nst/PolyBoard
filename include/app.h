@@ -1,5 +1,5 @@
-#ifndef LAUNCHPAD_APP_H
-#define LAUNCHPAD_APP_H
+#ifndef APP_H
+#define APP_H
 
 /******************************************************************************
 
@@ -32,6 +32,8 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
  *****************************************************************************/
+
+// NOLINTBEGIN
 
 // ____________________________________________________________________________
 //
@@ -249,4 +251,5 @@ void app_surface_event(u8 type, u8 index, u8 value);
  */
 void app_aftertouch_event(u8 index, u8 value);
 
+// NOLINTEND
 #endif

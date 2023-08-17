@@ -19,3 +19,7 @@ jobs:
         run: make
       - name: test
         run: test -f build/polyboard.syx
+      - name: lint
+        run: make lint
+      - name: tidy
+        run: make tidy

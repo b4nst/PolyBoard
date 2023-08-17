@@ -1,6 +1,6 @@
 
-#ifndef APP_TYPES_H
-#define APP_TYPES_H
+#ifndef APP_DEFS_H
+#define APP_DEFS_H
 
 /******************************************************************************
 

@@ -1,39 +1,27 @@
-#ifndef POLYBOARD_LAYOUT_H
-#define POLYBOARD_LAYOUT_H
+#ifndef LAYOUT_H
+#define LAYOUT_H
 
 #include "app.h"
 #include "app_defs.h"
 #include "colors.h"
 
-// Inner pad indexes
-static const u8 PAD_INDEXES[PAD_COUNT] = {
-    11, 12, 13, 14, 15, 16, 17, 18, 21, 22, 23, 24, 25, 26, 27, 28,
-    31, 32, 33, 34, 35, 36, 37, 38, 41, 42, 43, 44, 45, 46, 47, 48,
-    51, 52, 53, 54, 55, 56, 57, 58, 61, 62, 63, 64, 65, 66, 67, 68,
-    71, 72, 73, 74, 75, 76, 77, 78, 81, 82, 83, 84, 85, 86, 87, 88,
-};
+#define GRID_SIZE 100
 
-static const int LAYOUT_LOGO[PAD_COUNT] = {
-    COLOR_WHITE,   COLOR_WHITE,   COLOR_WHITE,   COLOR_WHITE,   COLOR_WHITE,
-    COLOR_WHITE,   COLOR_WHITE,   COLOR_WHITE,   COLOR_WHITE,   COLOR_WHITE,
-    COLOR_TEAL,    COLOR_TEAL,    COLOR_WHITE,   COLOR_WHITE,   COLOR_WHITE,
-    COLOR_WHITE,   COLOR_WHITE,   COLOR_TEAL,    COLOR_WHITE,   COLOR_TEAL,
-    COLOR_WHITE,   COLOR_WHITE,   COLOR_WHITE,   COLOR_WHITE,   COLOR_WHITE,
-    COLOR_TEAL,    COLOR_TEAL,    COLOR_WHITE,   COLOR_WHITE,   COLOR_WHITE,
-    COLOR_MAGENTA, COLOR_WHITE,   COLOR_WHITE,   COLOR_TEAL,    COLOR_WHITE,
-    COLOR_WHITE,   COLOR_WHITE,   COLOR_MAGENTA, COLOR_MAGENTA, COLOR_WHITE,
-    COLOR_WHITE,   COLOR_WHITE,   COLOR_WHITE,   COLOR_WHITE,   COLOR_MAGENTA,
-    COLOR_WHITE,   COLOR_MAGENTA, COLOR_WHITE,   COLOR_WHITE,   COLOR_WHITE,
-    COLOR_WHITE,   COLOR_WHITE,   COLOR_MAGENTA, COLOR_MAGENTA, COLOR_WHITE,
-    COLOR_WHITE,   COLOR_WHITE,   COLOR_WHITE,   COLOR_WHITE,   COLOR_WHITE,
-    COLOR_WHITE,   COLOR_WHITE,   COLOR_WHITE,   COLOR_WHITE,
+static const u32 GRID_LOGO[GRID_SIZE] = {
+    [25] = COLOR_MAGENTA, [26] = COLOR_MAGENTA, [35] = COLOR_MAGENTA,
+    [37] = COLOR_MAGENTA, [46] = COLOR_MAGENTA, [47] = COLOR_MAGENTA,
+    [57] = COLOR_MAGENTA,
+
+    [42] = COLOR_TEAL,    [52] = COLOR_TEAL,    [53] = COLOR_TEAL,
+    [62] = COLOR_TEAL,    [64] = COLOR_TEAL,    [73] = COLOR_TEAL,
+    [74] = COLOR_TEAL,
 };
 
 /**
- * Renders the layout on the pads.
+ * Renders the full grid
  *
  * @param layout The layout to render.
  */
-void render_layout(const int layout[PAD_COUNT]);
+void render_grid(const u32 layout[GRID_SIZE]);
 
-#endif // POLYBOARD_LAYOUT_H
+#endif // LAYOUT_H
