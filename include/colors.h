@@ -1,0 +1,10 @@
+#ifndef POLYBOARD_COLORS_H
+#define POLYBOARD_COLORS_H
+
+// Predefined colors
+#define COLOR_BLACK 0x000000
+#define COLOR_WHITE 0xFFFFFF
+#define COLOR_MAGENTA 0x9F2B68
+#define COLOR_TEAL 0x008080
+
+#endif // POLYBOARD_COLORS_H
