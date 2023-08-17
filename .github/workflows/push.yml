@@ -1,0 +1,17 @@
+name: Build and Test
+
+on:
+  push:
+    tags-ignore:
+      - v**
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: carlosperate/arm-none-eabi-gcc-action@v1
+      - name: build
+        run: make
+      - name: test
+        run: test -f build/launchpad_pro.syx
