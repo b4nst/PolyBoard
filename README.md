@@ -1,6 +1,4 @@
-# PolyBoard
-
-![PolyBoard](asset/polyboard_logo.png)
+# ![PolyBoard](asset/polyboard_banner.png)
 
 ## Uploading to a Launchpad Pro
 
