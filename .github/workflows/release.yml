@@ -23,5 +23,5 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: build/launchpad_pro.syx
+          files: build/polyboard.syx
           generate_release_notes: true
