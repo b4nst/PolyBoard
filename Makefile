@@ -2,7 +2,8 @@ BUILDDIR = build
 
 TOOLS = tools
 
-SOURCES += src/app.c
+SOURCES := $(wildcard src/*.c)
+HEADERS := $(wildcard include/*.h)
 
 INCLUDES += -Iinclude -I
 
@@ -23,6 +24,7 @@ HOST_GCC = gcc
 CC = arm-none-eabi-gcc
 LD = arm-none-eabi-gcc
 OBJCOPY = arm-none-eabi-objcopy
+CODE_STYLE = llvm
 
 CFLAGS  = -Os -Wall -I.\
 -D_STM32F103RBT6_  -D_STM3x_  -D_STM32x_ -mthumb -mcpu=cortex-m3 \
@@ -62,6 +64,18 @@ DEPENDS := $(OBJECTS:.o=.d)
 $(BUILDDIR)/%.o: %.c
 	mkdir -p $(dir $@)
 	$(CC) -c $(CFLAGS) -MMD -o $@ $<
+
+fmt: $(SOURCES) $(HEADERS)
+	clang-format --style=$(CODE_STYLE) -i $^
+.PHONY: fmt
+
+tidy: $(SOURCES) $(HEADERS)
+	clang-tidy $^ -- -Iinclude
+.PHONY: tidy
+
+lint: $(SOURCES) $(HEADERS)
+	clang-format --style=$(CODE_STYLE) -Werror --dry-run $^
+.PHONY: lint
 
 clean:
 	rm -rf $(BUILDDIR)
