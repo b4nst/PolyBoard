@@ -1,5 +1,5 @@
 ---
-Checks:          'clang-diagnostic-*,clang-analyzer-*,*,-altera-unroll-loops,-modernize-macro-to-enum'
+Checks:          'clang-diagnostic-*,clang-analyzer-*,*,-altera-unroll-loops,-modernize-macro-to-enum,-cppcoreguidelines-avoid-magic-numbers,-readability-magic-numbers'
 WarningsAsErrors: ''
 HeaderFilterRegex: '.*'
 AnalyzeTemporaryDtors: false
