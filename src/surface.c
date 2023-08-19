@@ -16,3 +16,12 @@ enum SurfaceKeyType index_to_surface_key_type(unsigned char index) {
 
   return SURFACE_PAD;
 }
+
+unsigned char index_to_note(const unsigned char index,
+                            const struct NoteParams *params,
+                            const unsigned char scale[8]) {
+  unsigned char c_offset = scale[index % 10 - 1];
+  unsigned char r_offset = (index / 10 - 1) * params->interval;
+
+  return params->root + r_offset + c_offset + params->octave * 12;
+}
