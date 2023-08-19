@@ -16,3 +16,9 @@ I won't describe how to use these tools, I'm sure you already know - and if you 
 1. Wait for the update to complete, and for the device to reboot!
 
 > Tip - set the delay between sysex messages to as low a value as possible, so you're not waiting about for ages while the firmware uploads!
+
+## Contributing
+
+You will need a container runtime (containerd, podman, docker, etc...) or Vagrant.
+
+

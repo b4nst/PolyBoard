@@ -15,8 +15,14 @@ WORKDIR ${path}
 #ADD . ${path}
 
 # Distro management
-RUN apt-get update && apt-get install -y build-essential gcc-arm-none-eabi && \
-	apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apt-get update && \
+    apt-get install -y \
+    	build-essential \
+	libcmocka-dev \
+	clang \
+    	gcc-arm-none-eabi && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Run shell
 CMD ["/bin/bash"]
