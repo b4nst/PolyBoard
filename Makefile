@@ -4,19 +4,21 @@ TOOLS = tools
 
 SOURCES := $(wildcard src/*.c)
 HEADERS := $(wildcard include/*.h)
+TESTS := $(wildcard tests/*.c)
+MOCKS := $(wildcard tests/mocks/*.c)
 
 INCLUDES += -Iinclude -I
 
 LIB = lib/launchpad_pro.a
 
 OBJECTS = $(addprefix $(BUILDDIR)/, $(addsuffix .o, $(basename $(SOURCES))))
+TEST_RUNS = $(addprefix $(BUILDDIR)/, $(addsuffix .run, $(basename $(TESTS))))
 
 # output files
 SYX = $(BUILDDIR)/polyboard.syx
 ELF = $(BUILDDIR)/polyboard.elf
 HEX = $(BUILDDIR)/polyboard.hex
 HEXTOSYX = $(BUILDDIR)/hextosyx
-SIMULATOR = $(BUILDDIR)/simulator
 
 # tools
 HOST_GPP = g++
@@ -36,20 +38,15 @@ LDSCRIPT = stm32_flash.ld
 
 LDFLAGS += -T$(LDSCRIPT) -u _start -u _Minimum_Stack_Size  -mcpu=cortex-m3 -mthumb -specs=nano.specs -specs=nosys.specs -nostdlib -Wl,-static -N -nostartfiles -Wl,--gc-sections
 
-all: $(SYX)
+all: test $(SYX)
 
 # build the final sysex file from the ELF - run the simulator first
-$(SYX): $(HEX) $(HEXTOSYX) $(SIMULATOR)
-	./$(SIMULATOR)
+$(SYX): $(HEX) $(HEXTOSYX) 
 	./$(HEXTOSYX) $(HEX) $(SYX)
 
 # build the tool for conversion of ELF files to sysex, ready for upload to the unit
 $(HEXTOSYX):
 	$(HOST_GPP) -Ofast -std=c++0x -I./$(TOOLS)/libintelhex/include ./$(TOOLS)/libintelhex/src/intelhex.cc $(TOOLS)/hextosyx.cpp -o $(HEXTOSYX)
-
-# build the simulator (it's a very basic test of the code before it runs on the device!)
-$(SIMULATOR):
-	$(HOST_GCC) -g3 -O0 -std=c99 -Iinclude $(TOOLS)/simulator.c $(SOURCES) -o $(SIMULATOR)
 
 $(HEX): $(ELF)
 	$(OBJCOPY) -O ihex $< $@
@@ -64,6 +61,16 @@ DEPENDS := $(OBJECTS:.o=.d)
 $(BUILDDIR)/%.o: %.c
 	mkdir -p $(dir $@)
 	$(CC) -c $(CFLAGS) -MMD -o $@ $<
+
+$(BUILDDIR)/tests/%.run: tests/%.c
+	mkdir -p $(dir $@)
+	$(HOST_GCC) -g3 -O0 -std=c99 -Iinclude $^ $(SOURCES) $(MOCKS) -o $@ -lcmocka
+
+test: $(TEST_RUNS)
+	@for test in $(TEST_RUNS); do \
+		echo "Running $$test"; \
+		$$test; \
+	done
 
 fmt: $(SOURCES) $(HEADERS)
 	clang-format --style=$(CODE_STYLE) -i $^
