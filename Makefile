@@ -1,3 +1,8 @@
+define execute-command
+$(1)
+
+endef
+
 BUILDDIR = build
 
 TOOLS = tools
@@ -62,15 +67,14 @@ $(BUILDDIR)/%.o: %.c
 	mkdir -p $(dir $@)
 	$(CC) -c $(CFLAGS) -MMD -o $@ $<
 
-$(BUILDDIR)/tests/%.run: tests/%.c
+$(BUILDDIR)/tests/%.run: tests/%.c $(SOURCES) $(MOCKS)
 	mkdir -p $(dir $@)
-	$(HOST_GCC) -g3 -O0 -std=c99 -Iinclude $^ $(SOURCES) $(MOCKS) -o $@ -lcmocka
+	$(HOST_GCC) -g3 -O0 -std=c99 -Iinclude $^ -o $@ -lcmocka
 
 test: $(TEST_RUNS)
-	@for test in $(TEST_RUNS); do \
-		echo "Running $$test"; \
-		$$test; \
-	done
+	@$(foreach test, $(TEST_RUNS), \
+		$(call execute-command, $(test)))
+	@echo "All tests completed"
 
 fmt: $(SOURCES) $(HEADERS)
 	clang-format --style=$(CODE_STYLE) -i $^
